@@ -1,7 +1,7 @@
 require 'pry'
 class Artist
-    attr_accessor :name
-
+    attr_accessor :name, :songs
+    @@all= []
 
     def initialize(name)
         @name = name 
@@ -24,16 +24,20 @@ class Artist
     end
 
     def self.find_or_create_by_name(name_find)
-
-        Artist.all.find do |artist|
-            if artist.name == name_find
-                name_find
-            else
-                name_find = Artist.new(name_find)
-            end
-        end
-
-
+            self.find(name_find) ? self.find(name_find) : Artist.new(name_find)
     end
+
+    def self.find(artist_name) 
+        Artist.all.find do |artist|
+            artist.name == artist_name
+        end
+    end
+
+    def print_songs
+        self.songs.each do |songs|
+          puts songs.name
+        end
+    end
+
 
 end
